@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useGameStore } from '@/store/gameStore';
 
 const UPGRADE_LABELS: Record<string, string> = {
@@ -22,7 +22,10 @@ export default function UpgradesScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Text style={styles.title}>Demon Lord Upgrades</Text>
       <Text style={styles.subtitle}>
         Spend gems to empower your eternal slumber. All demons benefit from these auras.
@@ -61,7 +64,7 @@ export default function UpgradesScreen() {
           </View>
         );
       })}
-    </View>
+    </ScrollView>
   );
 }
 
@@ -71,6 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#05030A',
     paddingHorizontal: 16,
     paddingTop: 48,
+  },
+  contentContainer: {
+    paddingBottom: 32,
   },
   title: {
     fontSize: 22,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useGameStore } from '@/store/gameStore';
 import { Demon } from '@/models/game';
 
@@ -16,6 +16,13 @@ function getRarityColor(rarity: Demon['rarity']): string {
   }
 }
 
+const demonImages: Record<string, any> = {
+  'imp-attacker': require('../../assets/Crimson-imp.png'),
+  'orc-tank': require('../../assets/Gate-Orc.png'),
+  'witch-support': require('../../assets/Void-Witch.png'),
+  'goblin-farmer': require('../../assets/Greedy-Goblin.png'),
+};
+
 export default function DemonsScreen() {
   const demons = useGameStore((s) => s.demons);
   const resources = useGameStore((s) => s.resources);
@@ -29,7 +36,14 @@ export default function DemonsScreen() {
     return (
       <View style={styles.card}>
         <View style={styles.cardHeader}>
-          <Text style={styles.demonName}>{item.name}</Text>
+          <View style={styles.demonHeaderLeft}>
+            <Image
+              source={demonImages[item.id]}
+              style={styles.demonImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.demonName}>{item.name}</Text>
+          </View>
           <Text style={[styles.rarity, { color: getRarityColor(item.rarity) }]}>
             {item.rarity.toUpperCase()}
           </Text>
@@ -136,10 +150,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 6,
   },
+  demonHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   demonName: {
     fontSize: 16,
     fontWeight: '600',
     color: '#ffffff',
+  },
+  demonImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 6,
+    marginRight: 8,
   },
   rarity: {
     fontSize: 12,
