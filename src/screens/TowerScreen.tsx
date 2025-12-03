@@ -67,7 +67,7 @@ const RunnerSprite: React.FC<{ frames: any[]; fps?: number }> = ({ frames, fps =
 };
 
 export default function TowerScreen() {
-  const { currentFloor, maxReachedFloor, demons, demonLordUpgrades, resources, pendingBattleMs, touch } =
+  const { currentFloor, maxReachedFloor, demons, demonLordUpgrades, resources, pendingBattleMs } =
     useGameStore();
 
   const floorInfo = getFloorInfo(currentFloor);
@@ -238,12 +238,6 @@ export default function TowerScreen() {
         <Text style={styles.value}>Souls: {resources.souls.toLocaleString()}</Text>
         <Text style={styles.value}>Gems: {resources.gems.toLocaleString()}</Text>
       </View>
-
-      <TouchableOpacity style={styles.button} onPress={touch}>
-        <Text style={styles.buttonText}>Sync Idle Progress</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.hint}>The party climbs the tower even when you are away.</Text>
     </ScrollView>
   );
 }
@@ -371,22 +365,5 @@ const styles = StyleSheet.create({
     height: 68,
     marginLeft: 12,
   },
-  button: {
-    marginTop: 8,
-    backgroundColor: '#e945ff',
-    paddingVertical: 12,
-    borderRadius: 999,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#1b071f',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  hint: {
-    marginTop: 12,
-    fontSize: 12,
-    color: '#7b6c93',
-    textAlign: 'center',
-  },
+  
 });

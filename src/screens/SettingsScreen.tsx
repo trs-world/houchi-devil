@@ -1,50 +1,49 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { useGameStore } from '@/store/gameStore';
+import { Demon } from '@/models/game';
+
+const zukanImages: Record<string, any> = {
+  'Crimson Imp': require('../../assets/moving/Crimson-imp-1.png'),
+  'Gate Orc': require('../../assets/moving/Gate-Orc-1.png'),
+  'Void Witch': require('../../assets/moving/Void-Witch-1.png'),
+  'Greedy Goblin': require('../../assets/moving/Greedy-Goblin-1.png'),
+  'Hell-Hound': require('../../assets/moving/Hell-Hound-1.png'),
+  'Void-Eye': require('../../assets/moving/Void-Eye-1.png'),
+  'Stone-Golem': require('../../assets/moving/Stone-Golem-1.png'),
+  Litch: require('../../assets/moving/Litch-1.png'),
+};
 
 export default function SettingsScreen() {
-  const resetGame = useGameStore((s) => s.resetGame);
-  const touch = useGameStore((s) => s.touch);
+  const demons = useGameStore((s) => s.demons);
 
-  const handleReset = () => {
-    Alert.alert(
-      'Reset Progress',
-      'Are you sure you want to reset all progress? This cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Reset',
-          style: 'destructive',
-          onPress: () => resetGame(),
-        },
-      ],
+  const renderItem = ({ item }: { item: Demon }) => {
+    const source = zukanImages[item.name];
+
+    return (
+      <View style={styles.gridItem}>
+        {source && (
+          <Image source={source} style={styles.demonImage} resizeMode="contain" />
+        )}
+        <Text style={styles.demonName} numberOfLines={1}>
+          {item.name}
+        </Text>
+      </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-      <Text style={styles.subtitle}>Tower of Demonlord v1.0.0</Text>
+      <Text style={styles.title}>図鑑</Text>
+      <Text style={styles.subtitle}>仲間になった悪魔たちを眺めることができます。</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.heading}>Idle Sync</Text>
-        <Text style={styles.text}>
-          If something looks out of sync, you can manually trigger an idle progress check.
-        </Text>
-        <TouchableOpacity style={styles.buttonSecondary} onPress={touch}>
-          <Text style={styles.buttonSecondaryText}>Sync Now</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.heading}>Danger Zone</Text>
-        <Text style={styles.text}>
-          This will wipe all demons, floors, and resources, and start from the beginning.
-        </Text>
-        <TouchableOpacity style={styles.buttonDanger} onPress={handleReset}>
-          <Text style={styles.buttonDangerText}>Reset Game</Text>
-        </TouchableOpacity>
-      </View>
+      <FlatList
+        data={demons}
+        keyExtractor={(item) => item.id}
+        numColumns={4}
+        renderItem={renderItem}
+        contentContainerStyle={styles.grid}
+      />
     </View>
   );
 }
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#05030A',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 48,
   },
   title: {
@@ -69,46 +68,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
-  card: {
-    backgroundColor: '#120a1f',
-    borderRadius: 12,
-    padding: 16,
+  grid: {
+    paddingBottom: 24,
+  },
+  gridItem: {
+    flex: 1,
+    alignItems: 'center',
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#241133',
   },
-  heading: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
-    marginBottom: 6,
+  demonImage: {
+    width: 56,
+    height: 56,
+    marginBottom: 4,
+    borderRadius: 8,
   },
-  text: {
-    fontSize: 13,
-    color: '#c7b7dd',
-    marginBottom: 10,
-  },
-  buttonSecondary: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 999,
-    backgroundColor: '#2a163d',
-  },
-  buttonSecondaryText: {
+  demonName: {
+    fontSize: 10,
     color: '#fef5ff',
-    fontWeight: '600',
-  },
-  buttonDanger: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 999,
-    backgroundColor: '#b3261e',
-    marginTop: 4,
-  },
-  buttonDangerText: {
-    color: '#fff1f0',
-    fontWeight: '700',
+    textAlign: 'center',
   },
 });

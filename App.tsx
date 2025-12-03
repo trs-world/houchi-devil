@@ -50,7 +50,7 @@ export default function App() {
             if (route.name === 'Tower') iconName = 'podium';
             if (route.name === 'Demons') iconName = 'flame';
             if (route.name === 'Upgrades') iconName = 'sparkles';
-            if (route.name === 'Settings') iconName = 'settings';
+            if (route.name === 'Zukan') iconName = 'book';
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -58,7 +58,7 @@ export default function App() {
         <Tab.Screen name="Tower" component={TowerScreen} />
         <Tab.Screen name="Demons" component={DemonsScreen} />
         <Tab.Screen name="Upgrades" component={UpgradesScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Zukan" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
