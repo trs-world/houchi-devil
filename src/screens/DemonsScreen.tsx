@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useGameStore } from '@/store/gameStore';
 import { Demon } from '@/models/game';
@@ -32,6 +32,16 @@ export default function DemonsScreen() {
   const resources = useGameStore((s) => s.resources);
   const levelUpDemon = useGameStore((s) => s.levelUpDemon);
   const togglePartyStatus = useGameStore((s) => s.togglePartyStatus);
+
+  const [rarityFilter, setRarityFilter] = useState<
+    'all' | 'common' | 'rare' | 'epic' | 'legendary'
+  >('all');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const filteredDemons =
+    rarityFilter === 'all'
+      ? demons
+      : demons.filter((demon) => demon.rarity === rarityFilter);
 
   const renderItem = ({ item }: { item: Demon }) => {
     const soulCost = Math.floor(10 * Math.pow(1.35, item.level - 1));
@@ -92,13 +102,53 @@ export default function DemonsScreen() {
         Spend souls to strengthen your minions and choose who joins the expedition.
       </Text>
 
-      <View style={styles.resourcesRow}>
-        <Text style={styles.resource}>Souls: {resources.souls.toLocaleString()}</Text>
-        <Text style={styles.resource}>Gems: {resources.gems.toLocaleString()}</Text>
+      <View style={styles.topRow}>
+        <View style={styles.resourcesColumn}>
+          <Text style={styles.resource}>Souls: {resources.souls.toLocaleString()}</Text>
+          <Text style={styles.resource}>Gems: {resources.gems.toLocaleString()}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={() => setIsFilterOpen((prev) => !prev)}
+        >
+          <Text style={styles.filterButtonText}>
+            Filter{rarityFilter !== 'all' ? `: ${rarityFilter.toUpperCase()}` : ''}
+          </Text>
+        </TouchableOpacity>
       </View>
 
+      {isFilterOpen && (
+        <View style={styles.filterRow}>
+          {[
+            { key: 'all', label: 'All' },
+            { key: 'common', label: 'Common' },
+            { key: 'rare', label: 'Rare' },
+            { key: 'epic', label: 'Epic' },
+            { key: 'legendary', label: 'Legendary' },
+          ].map((f) => {
+            const isActive = rarityFilter === f.key;
+            return (
+              <TouchableOpacity
+                key={f.key}
+                style={[styles.filterChip, isActive && styles.filterChipActive]}
+                onPress={() => setRarityFilter(f.key as any)}
+              >
+                <Text
+                  style={[
+                    styles.filterChipText,
+                    isActive && styles.filterChipTextActive,
+                  ]}
+                >
+                  {f.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
+
       <FlatList
-        data={demons}
+        data={filteredDemons}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={styles.listContent}
@@ -127,10 +177,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
-  resourcesRow: {
+  topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
     marginBottom: 8,
+    gap: 8,
+  },
+  resourcesColumn: {
+    flexDirection: 'column',
+    flex: 1,
   },
   resource: {
     fontSize: 13,
@@ -139,6 +195,50 @@ const styles = StyleSheet.create({
   listContent: {
     paddingVertical: 8,
     paddingBottom: 32,
+  },
+  filterButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#3b203f',
+    backgroundColor: '#120a1f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  filterButtonText: {
+    color: '#fef5ff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  filterRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    gap: 6,
+  },
+  filterChip: {
+    flex: 1,
+    paddingVertical: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#3b203f',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#120a1f',
+  },
+  filterChipActive: {
+    backgroundColor: '#5f3dd9',
+    borderColor: '#a78bfa',
+  },
+  filterChipText: {
+    fontSize: 11,
+    color: '#c7b7dd',
+    fontWeight: '500',
+  },
+  filterChipTextActive: {
+    color: '#fef5ff',
+    fontWeight: '700',
   },
   card: {
     backgroundColor: '#120a1f',

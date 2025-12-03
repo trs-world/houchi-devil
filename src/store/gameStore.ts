@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import {
   BASE_FLOOR_CLEAR_TIME_MS,
+  OFFLINE_FLOOR_CLEAR_TIME_MS,
   GameState,
   Resources,
   createInitialGameState,
@@ -17,7 +18,7 @@ export interface GameStore extends GameState {
   levelUpDemon: (id: string) => void;
   togglePartyStatus: (id: string) => void;
   buyUpgrade: (type: keyof GameState['demonLordUpgrades']) => void;
-  processTime: (elapsedMs: number) => void;
+  processTime: (elapsedMs: number, mode?: 'online' | 'offline') => void;
   touch: () => void;
   resetGame: () => void;
 }
@@ -112,7 +113,7 @@ export const useGameStore = create<GameStore>()(
         });
       },
 
-      processTime: (elapsedMs: number) => {
+      processTime: (elapsedMs: number, mode: 'online' | 'offline' = 'online') => {
         if (elapsedMs <= 0) return;
 
         set((state) => {
@@ -120,14 +121,16 @@ export const useGameStore = create<GameStore>()(
           const startFloor = currentFloor;
           const partyPower = getPartyPower(state.demons, state.demonLordUpgrades);
 
+          const clearTimeMs = mode === 'offline' ? OFFLINE_FLOOR_CLEAR_TIME_MS : BASE_FLOOR_CLEAR_TIME_MS;
+
           let remainingMs = pendingBattleMs + elapsedMs;
           let safety = 0;
 
-          while (remainingMs >= BASE_FLOOR_CLEAR_TIME_MS && safety < 1000) {
+          while (remainingMs >= clearTimeMs && safety < 1000) {
             const floorInfo = getFloorInfo(currentFloor);
             const baseRewards = getFloorRewards(floorInfo, state.demonLordUpgrades);
 
-            remainingMs -= BASE_FLOOR_CLEAR_TIME_MS;
+            remainingMs -= clearTimeMs;
 
             if (partyPower >= floorInfo.difficulty) {
               // 勝てる場合: フロアを進めてフル報酬
@@ -165,7 +168,7 @@ export const useGameStore = create<GameStore>()(
         if (last != null) {
           const elapsed = now - last;
           if (elapsed > 0) {
-            get().processTime(elapsed);
+            get().processTime(elapsed, 'offline');
             return;
           }
         }
@@ -204,9 +207,9 @@ export const useGameStore = create<GameStore>()(
         if (state.lastActiveAt != null) {
           const elapsed = now - state.lastActiveAt;
           if (elapsed > 0) {
-            // After rehydrate, run offline progress once
+            // After rehydrate, run offline progress once (offline speed)
             const beforeResources = state.resources;
-            useGameStore.getState().processTime(elapsed);
+            useGameStore.getState().processTime(elapsed, 'offline');
 
             // Only notify if the player was away for at least 1 minute
             if (elapsed >= 300000) {

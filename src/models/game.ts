@@ -41,7 +41,8 @@ export interface GameState {
   lastActiveAt: number | null; // timestamp for idle progress
 }
 
-export const BASE_FLOOR_CLEAR_TIME_MS = 20000; // 20s per floor when strong enough
+export const BASE_FLOOR_CLEAR_TIME_MS = 20000; // 20s per floor when strong enough (in-app)
+export const OFFLINE_FLOOR_CLEAR_TIME_MS = 40000; // 40s per floor when app is closed
 
 export function getDemonPower(demon: Demon, upgrades: DemonLordUpgrades): number {
   const attack = demon.baseAttack * (1 + demon.level * 0.12) * upgrades.attackMultiplier;
