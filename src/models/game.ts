@@ -121,7 +121,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 9,
       baseSpeed: 12,
       role: 'support',
-      rarity: 'epic',
+      rarity: 'rare',
       isInParty: false,
     },
     {
@@ -132,7 +132,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 7,
       baseSpeed: 13,
       role: 'attacker',
-      rarity: 'epic',
+      rarity: 'legendary',
       isInParty: false,
     },
     {
@@ -143,7 +143,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 6,
       baseSpeed: 12,
       role: 'attacker',
-      rarity: 'legendary',
+      rarity: 'epic',
       isInParty: false,
     },
     {
@@ -165,7 +165,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 17,
       baseSpeed: 5,
       role: 'tank',
-      rarity: 'epic',
+      rarity: 'legendary',
       isInParty: false,
     },
     {
@@ -198,7 +198,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 7,
       baseSpeed: 13,
       role: 'farmer',
-      rarity: 'epic',
+      rarity: 'legendary',
       isInParty: false,
     },
     {
@@ -209,7 +209,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 8,
       baseSpeed: 11,
       role: 'attacker',
-      rarity: 'rare',
+      rarity: 'epic',
       isInParty: false,
     },
     {
@@ -220,7 +220,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 11,
       baseSpeed: 9,
       role: 'support',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -231,7 +231,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 7,
       baseSpeed: 10,
       role: 'attacker',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -242,7 +242,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 9,
       baseSpeed: 12,
       role: 'support',
-      rarity: 'rare',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -253,7 +253,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 8,
       baseSpeed: 9,
       role: 'attacker',
-      rarity: 'legendary',
+      rarity: 'epic',
       isInParty: false,
     },
     {
@@ -286,7 +286,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 8,
       baseSpeed: 12,
       role: 'attacker',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -319,7 +319,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 18,
       baseSpeed: 6,
       role: 'tank',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -330,7 +330,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 8,
       baseSpeed: 11,
       role: 'attacker',
-      rarity: 'epic',
+      rarity: 'rare',
       isInParty: false,
     },
     {
@@ -341,7 +341,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 11,
       baseSpeed: 9,
       role: 'support',
-      rarity: 'legendary',
+      rarity: 'rare',
       isInParty: false,
     },
     {
@@ -352,7 +352,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 7,
       baseSpeed: 13,
       role: 'attacker',
-      rarity: 'rare',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -363,7 +363,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 12,
       baseSpeed: 10,
       role: 'support',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -374,7 +374,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 7,
       baseSpeed: 12,
       role: 'attacker',
-      rarity: 'legendary',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -385,7 +385,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 19,
       baseSpeed: 6,
       role: 'tank',
-      rarity: 'epic',
+      rarity: 'rare',
       isInParty: false,
     },
     {
@@ -418,7 +418,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 9,
       baseSpeed: 10,
       role: 'attacker',
-      rarity: 'legendary',
+      rarity: 'rare',
       isInParty: false,
     },
     {
@@ -429,7 +429,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 11,
       baseSpeed: 11,
       role: 'support',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -473,7 +473,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 9,
       baseSpeed: 12,
       role: 'attacker',
-      rarity: 'epic',
+      rarity: 'common',
       isInParty: false,
     },
     {
@@ -484,7 +484,7 @@ export function createDefaultDemons(): Demon[] {
       baseDefense: 13,
       baseSpeed: 10,
       role: 'support',
-      rarity: 'rare',
+      rarity: 'common',
       isInParty: false,
     },
     {
